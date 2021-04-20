@@ -31,24 +31,8 @@ namespace PhysicsEngine
         {
             base.BeforeUpdate();
 
-            foreach (Entity ent in World.Entities)
-            {
-                if (ent is Node)
-                {
-                    Node other = ent as Node;
-                    float dist = Vector2.Distance(other.Position, Position);
-
-                    if (dist < Size)
-                    {
-                        //Position += (other.Position - Position) * (5 - dist);
-                    }
-                }
-            }
-
             Force = Vector2.Zero;
             Force += Mass * World.G;
-
-
         }
 
         public override void Update()
@@ -56,7 +40,7 @@ namespace PhysicsEngine
             base.Update();
             if (MInput.LeftClick())
             {
-                Force += Math.Max(Vector2.Distance(MInput.Position.ToVector2(), Position), 0.1f) * (MInput.Position.ToVector2() - Position) * World.Step;
+                Force += Math.Min(Vector2.Distance(MInput.Position.ToVector2(), Position), 50) * (MInput.Position.ToVector2() - Position) * World.Step;
             }
         }
 
@@ -73,7 +57,7 @@ namespace PhysicsEngine
                 Position = edgeVertice;
                 delta.Normalize();
                 //rebound
-                Velocity = Velocity - 2 * Calc.CrossProduct(Velocity, delta) * delta;
+                //Velocity = Velocity - 2 * Calc.CrossProduct(Velocity, delta) * delta;
                 collided = false;
             }
 

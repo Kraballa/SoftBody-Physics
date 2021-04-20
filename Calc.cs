@@ -1495,6 +1495,13 @@ namespace PhysicsEngine
             return A.X * B.Y - B.X * A.Y;
         }
 
+        /// <summary>
+        /// copied from https://stackoverflow.com/questions/3120357/get-closest-point-to-a-line/9557244#9557244
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <param name="P"></param>
+        /// <returns></returns>
         public static Vector2 GetClosestPointOnLineSegment(Vector2 A, Vector2 B, Vector2 P)
         {
             Vector2 AP = P - A;       //Vector from A to P   
