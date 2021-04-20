@@ -13,10 +13,12 @@ namespace PhysicsEngine
         public List<Entity> Entities = new List<Entity>();
         private bool sorted = true;
 
+        private Polygon poly;
+
         public World()
         {
             Add(new SoftBody(12, 8, new RectangleF(100, 100, 300, 200)));
-            Add(new Polygon(new Vector2(0, 500), new Vector2(800, 630), new Vector2(20, 650)));
+            Add(poly = new Polygon(new Vector2(0, 500), new Vector2(800, 630), new Vector2(20, 650)));
         }
 
         public void Update()
@@ -39,8 +41,6 @@ namespace PhysicsEngine
         public void Draw()
         {
             Entities.ForEach((o) => o.Draw());
-
-            Render.Text(Render.Font, string.Format("num objects: {0}", Entities.Count), Vector2.Zero, Color.Red);
         }
 
         public void Add(Entity ent)

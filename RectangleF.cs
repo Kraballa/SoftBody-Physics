@@ -39,7 +39,7 @@ namespace PhysicsEngine
 
         public Vector2 Position
         {
-            get { return new Vector2(Left, Top); }
+            get { return new Vector2(Left, Top - Height); }
         }
 
         public static RectangleF Empty

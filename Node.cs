@@ -71,10 +71,9 @@ namespace PhysicsEngine
             Render.Rect(Position - Vector2.One * 5, 10, 10, Color.Red);
         }
 
-        public bool Collide()
+        public void ProcessCollision(Polygon poly)
         {
 
-            return false;
         }
     }
 }
