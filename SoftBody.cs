@@ -112,11 +112,5 @@ namespace PhysicsEngine
                 }
             }
         }
-
-        public override void Draw()
-        {
-            base.Draw();
-            Render.HollowRect(Bounds.Position, Bounds.Width, Bounds.Height, Color.Red);
-        }
     }
 }

@@ -10,7 +10,7 @@ namespace PhysicsEngine
         public Node A;
         public Node B;
         public float RestLength;
-        public float Stiffness = 100f;
+        public float Stiffness = 400f;
         public float DampingFactor = 5f;
 
         public Spring(Node a, Node b) : this(a, b, Vector2.Distance(a.Position, b.Position))

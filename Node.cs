@@ -30,9 +30,10 @@ namespace PhysicsEngine
         public override void BeforeUpdate()
         {
             base.BeforeUpdate();
-
+            collided = false;
             Force = Vector2.Zero;
             Force += Mass * World.G;
+
         }
 
         public override void Update()
@@ -49,25 +50,35 @@ namespace PhysicsEngine
             base.AfterUpdate();
             //Euler Integration
             Velocity += Force * World.Step / Mass;
-
             //if point is within polygon, push it out to the closest edge and rebound velocity along the normalized pussh vector
+            Vector2 delta = Vector2.Zero;
             if (collided)
             {
-                Vector2 delta = edgeVertice - Position;
-                Position = edgeVertice;
-                delta.Normalize();
-                //rebound
-                //Velocity = Velocity - 2 * Calc.CrossProduct(Velocity, delta) * delta;
-                collided = false;
-            }
+                delta = edgeVertice - Position;
+                //Position = edgeVertice;
 
+                if (delta.X * Velocity.X + delta.Y * Velocity.Y < 0)
+                {
+                    delta.Normalize();
+                    //rebound
+                    Velocity = Velocity - 2 * delta * (Velocity.X * delta.X + Velocity.Y * delta.Y);
+                }
+            }
             Position += Velocity * World.Step;
+            //Velocity += delta;
         }
 
         public override void Draw()
         {
             base.Draw();
-            Render.Rect(Position - Vector2.One * 5, 10, 10, Color.Red);
+            if (collided)
+            {
+                Render.Rect(edgeVertice - Vector2.One * 5, 10, 10, Color.Red);
+            }
+            else
+            {
+                Render.Rect(Position - Vector2.One * 5, 10, 10, Color.Red);
+            }
         }
 
         public void ProcessCollision(Polygon poly)

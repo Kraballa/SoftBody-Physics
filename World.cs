@@ -6,19 +6,21 @@ namespace PhysicsEngine
 {
     public class World : IComparer<Entity>
     {
-        public static Vector2 G = new Vector2(0, 9.80665f);
+        public static Vector2 G = new Vector2(0, 98.0665f);
         public static bool Walled = true;
-        public static float Step = 1 / 35f;
+        public static float Step = 1 / 60f;
 
         public List<Entity> Entities = new List<Entity>();
         private bool sorted = true;
 
-        private Polygon poly;
-
         public World()
         {
-            Add(new SoftBody(12, 8, new RectangleF(100, 100, 300, 200)));
-            Add(poly = new Polygon(new Vector2(0, 500), new Vector2(800, 630), new Vector2(20, 650)));
+            Add(new SoftBody(6, 4, new RectangleF(100, 50, 300, 200)));
+            Add(new Polygon(new Vector2(0, 300), new Vector2(500, 630), new Vector2(700, 630), new Vector2(700, 650), new Vector2(20, 650)));
+            Add(new Polygon(new Vector2(900, 400), new Vector2(900, 500), new Vector2(1100, 600), new Vector2(1100, 300)));
+
+            Add(new Polygon(new Vector2(30, 30), new Vector2(1250, 30), new Vector2(1250, 690), new Vector2(30, 690), new Vector2(30, 30),
+                new Vector2(1, 1), new Vector2(1, 719), new Vector2(1279, 719), new Vector2(1279, 1), new Vector2(1, 1)));
         }
 
         public void Update()
@@ -41,9 +43,6 @@ namespace PhysicsEngine
         public void Draw()
         {
             Entities.ForEach((o) => o.Draw());
-
-
-            Render.Circle(poly.ClosestPoint(MInput.Position.ToVector2()), 10, Color.Red, 3f, 3);
         }
 
         public void Add(Entity ent)

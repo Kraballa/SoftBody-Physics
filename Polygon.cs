@@ -43,9 +43,6 @@ namespace PhysicsEngine
         public override void Draw()
         {
             base.Draw();
-
-            Render.HollowRect(Bounds.Position, Bounds.Width, Bounds.Height, Color.Red);
-
             for (int i = 0; i < Vertices.Count; i++)
             {
                 Render.Line(Vertices[i], Vertices[(i + 1) % Vertices.Count], Color.Black, 3f);
