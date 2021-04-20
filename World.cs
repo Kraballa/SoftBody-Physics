@@ -7,13 +7,16 @@ namespace PhysicsEngine
     public class World : IComparer<Entity>
     {
         public static Vector2 G = new Vector2(0, 9.80665f);
+        public static bool Walled = true;
+        public static float Step = 1 / 35f;
 
         public List<Entity> Entities = new List<Entity>();
         private bool sorted = true;
 
         public World()
         {
-            Add(new SoftBody(12, 8, new Rectangle(200, 200, 300, 200)));
+            Add(new SoftBody(12, 8, new RectangleF(100, 100, 300, 200)));
+            Add(new Polygon(new Vector2(0, 500), new Vector2(800, 630), new Vector2(20, 650)));
         }
 
         public void Update()

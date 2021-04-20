@@ -10,22 +10,20 @@ namespace PhysicsEngine
         public Node A;
         public Node B;
         public float RestLength;
-        public float Stiffness = 1f;
-        public float DampingFactor = 0.1f;
+        public float Stiffness = 100f;
+        public float DampingFactor = 5f;
 
-        public Spring(Node a, Node b)
+        public Spring(Node a, Node b) : this(a, b, Vector2.Distance(a.Position, b.Position))
         {
-            A = a;
-            B = b;
 
-            RestLength = Vector2.Distance(A.Position, B.Position) + 10;
-
-            Depth = 1;
         }
 
         public Spring(Node a, Node b, float desiredLength)
         {
+            A = a;
+            B = b;
             RestLength = desiredLength;
+            Depth = 1;
         }
 
         public override void Update()

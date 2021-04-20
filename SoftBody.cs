@@ -7,16 +7,15 @@ namespace PhysicsEngine
 {
     public class SoftBody : Entity
     {
-
+        public RectangleF Bounds;
         private int NumX;
         private int NumY;
-        private Rectangle Rect;
 
-        public SoftBody(int numX, int numY, Rectangle rect)
+        public SoftBody(int numX, int numY, RectangleF rect)
         {
             NumX = numX;
             NumY = numY;
-            Rect = rect;
+            Bounds = rect;
         }
 
         public override void Added(World world)
@@ -25,13 +24,13 @@ namespace PhysicsEngine
 
             Node[,] nodes = new Node[NumX, NumY];
 
-            Vector2 delta = new Vector2((float)Rect.Width / (NumX + 1), (float)Rect.Height / (NumY + 1));
+            Vector2 delta = new Vector2((float)Bounds.Width / (NumX + 1), (float)Bounds.Height / (NumY + 1));
 
             for (int x = 0; x < NumX; x++)
             {
                 for (int y = 0; y < NumY; y++)
                 {
-                    Vector2 pos = Rect.Location.ToVector2() + new Vector2(delta.X * x, delta.Y * y);
+                    Vector2 pos = Bounds.Position + new Vector2(delta.X * x, delta.Y * y);
                     nodes[x, y] = new Node(pos);
                     World.Add(nodes[x, y]);
                 }

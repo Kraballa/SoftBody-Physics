@@ -7,6 +7,8 @@ namespace PhysicsEngine
 {
     public class Node : Entity
     {
+        public static float Size = 5f;
+
         public Vector2 Position;
         public Vector2 Velocity;
         public Vector2 Force;
@@ -25,33 +27,54 @@ namespace PhysicsEngine
         public override void BeforeUpdate()
         {
             base.BeforeUpdate();
+
+            foreach (Entity ent in World.Entities)
+            {
+                if (ent is Node)
+                {
+                    Node other = ent as Node;
+                    float dist = Vector2.Distance(other.Position, Position);
+
+                    if (dist < Size)
+                    {
+                        //Position += (other.Position - Position) * (5 - dist);
+                    }
+                }
+            }
+
             Force = Vector2.Zero;
             Force += Mass * World.G;
 
-            if (MInput.LeftClick())
-            {
-                Force += Vector2.Distance(MInput.Position.ToVector2(), Position) * (MInput.Position.ToVector2() - Position) * (1 / 60f);
-            }
+
         }
 
         public override void Update()
         {
             base.Update();
-
+            if (MInput.LeftClick())
+            {
+                Force += Math.Max(Vector2.Distance(MInput.Position.ToVector2(), Position), 0.1f) * (MInput.Position.ToVector2() - Position) * World.Step;
+            }
         }
 
         public override void AfterUpdate()
         {
             base.AfterUpdate();
             //Euler Integration
-            Velocity += Force * (1 / 60f) / Mass;
-            Position += Velocity * (1 / 60f);
+            Velocity += Force * World.Step / Mass;
+            Position += Velocity * World.Step;
         }
 
         public override void Draw()
         {
             base.Draw();
             Render.Rect(Position - Vector2.One * 5, 10, 10, Color.Red);
+        }
+
+        public bool Collide()
+        {
+
+            return false;
         }
     }
 }
