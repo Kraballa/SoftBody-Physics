@@ -41,6 +41,9 @@ namespace PhysicsEngine
         public void Draw()
         {
             Entities.ForEach((o) => o.Draw());
+
+
+            Render.Circle(poly.ClosestPoint(MInput.Position.ToVector2()), 10, Color.Red, 3f, 3);
         }
 
         public void Add(Entity ent)

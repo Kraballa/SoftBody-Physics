@@ -105,7 +105,7 @@ namespace PhysicsEngine
                         {
                             if (poly.Contains(n.Position))
                             {
-                                //process
+                                n.ProcessCollision(poly);
                             }
                         }
                     }

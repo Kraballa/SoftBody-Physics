@@ -14,6 +14,9 @@ namespace PhysicsEngine
         public Vector2 Force;
         public float Mass = 1;
 
+        private bool collided = false;
+        private Vector2 edgeVertice;
+
         public Node(Vector2 pos)
         {
             Position = pos;
@@ -62,6 +65,18 @@ namespace PhysicsEngine
             base.AfterUpdate();
             //Euler Integration
             Velocity += Force * World.Step / Mass;
+
+            //if point is within polygon, push it out to the closest edge and rebound velocity along the normalized pussh vector
+            if (collided)
+            {
+                Vector2 delta = edgeVertice - Position;
+                Position = edgeVertice;
+                delta.Normalize();
+                //rebound
+                Velocity = Velocity - 2 * Calc.CrossProduct(Velocity, delta) * delta;
+                collided = false;
+            }
+
             Position += Velocity * World.Step;
         }
 
@@ -73,7 +88,12 @@ namespace PhysicsEngine
 
         public void ProcessCollision(Polygon poly)
         {
+            if (poly.Contains(Position))
+            {
+                collided = true;
 
+                edgeVertice = poly.ClosestPoint(Position);
+            }
         }
     }
 }

@@ -68,5 +68,25 @@ namespace PhysicsEngine
         {
             return NumIntersections(new Line(new Vector2(0, vertice.Y), vertice)) % 2 == 1;
         }
+
+        public Vector2 ClosestPoint(Vector2 vertice)
+        {
+            Vector2 closest = Calc.ClosestPointOnLine(Vertices[0], Vertices[1], vertice);
+            float curDist = (vertice - closest).Length();
+
+            for (int i = 1; i < Vertices.Count; i++)
+            {
+                Vector2 other = Calc.ClosestPointOnLine(Vertices[i], Vertices[(i + 1) % Vertices.Count], vertice);
+                float otherDist = (vertice - other).Length();
+
+                if (otherDist < curDist)
+                {
+                    closest = other;
+                    curDist = otherDist;
+                }
+            }
+
+            return closest;
+        }
     }
 }

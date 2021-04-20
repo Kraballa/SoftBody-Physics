@@ -32,10 +32,7 @@ namespace PhysicsEngine
             Bounds = new RectangleF(x, y, width, height);
         }
 
-        public static float CrossProduct(Vector2 A, Vector2 B)
-        {
-            return A.X * B.Y - B.X * A.Y;
-        }
+
 
         public Line Translate(Vector2 vec)
         {
@@ -46,7 +43,7 @@ namespace PhysicsEngine
         {
             Line transLine = Translate(-A0);
             Vector2 transP = P - A0;
-            double r = CrossProduct(transLine.B0, transP);
+            double r = Calc.CrossProduct(transLine.B0, transP);
             return Math.Abs(r) < EPSILON;
         }
 
@@ -54,7 +51,7 @@ namespace PhysicsEngine
         {
             Line transLine = Translate(-A0);
             Vector2 transP = P - A0;
-            return CrossProduct(transLine.B0, transP) < 0;
+            return Calc.CrossProduct(transLine.B0, transP) < 0;
         }
 
         public bool TouchOrCross(Line other)
