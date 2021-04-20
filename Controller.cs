@@ -8,6 +8,8 @@ namespace PhysicsEngine
     {
         public static Controller Instance;
 
+        public World World;
+
         private GraphicsDeviceManager Graphics;
 
         public Controller()
@@ -30,6 +32,8 @@ namespace PhysicsEngine
             Render.Initialize(GraphicsDevice);
             KInput.Initialize();
             MInput.Initialize();
+
+            World = new World();
         }
 
         protected override void Update(GameTime gameTime)
@@ -37,7 +41,7 @@ namespace PhysicsEngine
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            World.Update();
 
             base.Update(gameTime);
         }
@@ -46,7 +50,7 @@ namespace PhysicsEngine
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             Render.Begin();
-            // TODO: Add your drawing code here
+            World.Draw();
             Render.End();
             base.Draw(gameTime);
         }

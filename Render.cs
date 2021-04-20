@@ -17,9 +17,7 @@ namespace PhysicsEngine
 
         public static SpriteBatch SpriteBatch { get; set; }
 
-        public static SpriteFont TitleFont { get; set; }
-        public static SpriteFont UIFont { get; set; }
-        public static SpriteFont UIFontSmall { get; set; }
+        public static SpriteFont Font { get; set; }
         public static float CharWidth;
         public static float CharHeight;
 
@@ -33,7 +31,7 @@ namespace PhysicsEngine
             colors[0] = Color.White;
             Pixel.SetData(colors);
 
-            TitleFont = Controller.Instance.Content.Load<SpriteFont>("font");
+            Font = Controller.Instance.Content.Load<SpriteFont>("font");
         }
 
         public static void Point(Vector2 at, Color color)
